@@ -1,0 +1,8 @@
+name = "zillow-rates-proxy"
+main = "src/index.js"
+compatibility_date = "2025-01-01"
+
+# Uncomment and set these once you have a custom domain:
+# [[routes]]
+# pattern = "your-domain.com/rates"
+# zone_name = "your-domain.com"

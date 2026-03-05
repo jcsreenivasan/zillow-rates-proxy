@@ -1,0 +1,439 @@
+<style>
+  /* ── Base ── */
+  #zr-root {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    max-width: 900px;
+    width: 100%;
+    margin: 0 auto;
+    color: #1a1a2e;
+    box-sizing: border-box;
+    padding: 8px;
+  }
+  #zr-root * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  /* ── Toggle ── */
+  #zr-toggle-wrap {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 28px;
+  }
+  #zr-toggle {
+    display: inline-flex;
+    background: #ffffff;
+    border-radius: 999px;
+    padding: 4px;
+    box-shadow: 0 0 0 2px #4361ee, 0 4px 16px rgba(67,97,238,0.15);
+  }
+  .zr-toggle-btn {
+    border: none;
+    background: transparent;
+    border-radius: 999px;
+    padding: 10px 44px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: inherit;
+    color: #4361ee;
+    transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+    white-space: nowrap;
+  }
+  .zr-toggle-btn.zr-active {
+    background: linear-gradient(135deg, #4361ee, #6366f1);
+    color: #ffffff;
+    box-shadow: 0 2px 12px rgba(67,97,238,0.35);
+  }
+
+  /* ── Tabs ── */
+  #zr-tabs-wrap {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 32px;
+  }
+  #zr-tabs { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; }
+  .zr-tab {
+    border: 1.5px solid #d0d5e8;
+    border-radius: 999px;
+    padding: 9px 24px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    font-family: inherit;
+    background: #ffffff;
+    color: #5a6080;
+    transition: background 0.15s, color 0.15s, border-color 0.15s, box-shadow 0.15s;
+    white-space: nowrap;
+  }
+  .zr-tab.zr-active {
+    background: #4361ee;
+    color: #ffffff;
+    border-color: #4361ee;
+    box-shadow: 0 2px 10px rgba(67,97,238,0.3);
+  }
+  .zr-tab:not(.zr-active):hover {
+    border-color: #4361ee;
+    color: #4361ee;
+  }
+
+  /* ── Cards list ── */
+  #zr-cards { display: flex; flex-direction: column; gap: 12px; }
+
+  /* ── Card ── */
+  .zr-rate-card {
+    display: flex;
+    align-items: center;
+    border-radius: 20px;
+    padding: 24px 40px;
+    background: #ffffff;
+    box-shadow: 0 2px 12px rgba(26,26,46,0.07), 0 0 0 1px rgba(26,26,46,0.05);
+    transition: transform 0.18s ease, box-shadow 0.18s ease;
+  }
+  .zr-rate-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 24px rgba(67,97,238,0.12), 0 0 0 1px rgba(67,97,238,0.08);
+  }
+
+  /* Column shared styles */
+  .zr-col {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 0 24px;
+  }
+  .zr-col:first-child { padding-left: 0; }
+  .zr-col:last-child  { padding-right: 0; }
+
+  .zr-col-label {
+    font-size: 0.65rem;
+    font-weight: 600;
+    color: #a0a8c0;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 6px;
+  }
+  .zr-col-loan .zr-col-label { font-weight: 700; letter-spacing: 0.1em; }
+  .zr-col-program { font-size: 1.05rem; font-weight: 700; color: #1a1a2e; }
+  .zr-col-value   { font-size: 1rem;    font-weight: 700; color: #1a1a2e; }
+
+  /* Hero interest rate */
+  .zr-col-interest .zr-col-value {
+    font-size: 1.35rem;
+    font-weight: 800;
+    color: #4361ee;
+    letter-spacing: -0.02em;
+  }
+
+  /* Vertical divider between columns */
+  .zr-divider {
+    width: 1px;
+    height: 36px;
+    background: linear-gradient(to bottom, transparent, #dde2f0, transparent);
+    flex-shrink: 0;
+    align-self: center;
+  }
+
+  /* Points badge */
+  .zr-points-badge {
+    display: inline-block;
+    background: #fff8e6;
+    border: 1.5px solid #f0c850;
+    color: #b87a00;
+    border-radius: 999px;
+    padding: 4px 12px;
+    font-size: 0.82rem;
+    font-weight: 700;
+    white-space: nowrap;
+    width: fit-content;
+  }
+
+  /* ── Footer ── */
+  #zr-footer {
+    display: none;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 20px;
+    padding: 0 4px;
+  }
+  #zr-footer-left { font-size: 0.72rem; color: #c0c8d8; }
+  #zr-footer-left a { color: #4361ee; text-decoration: none; }
+  #zr-footer-left a:hover { text-decoration: underline; }
+  #zr-timestamp { font-size: 0.72rem; color: #c0c8d8; text-align: right; }
+
+  /* ── Loading ── */
+  #zr-loading {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    padding: 48px 0;
+  }
+  .zr-spinner {
+    width: 36px; height: 36px;
+    border: 3px solid #e9ecef;
+    border-top-color: #4361ee;
+    border-radius: 50%;
+    animation: zr-spin 0.75s linear infinite;
+  }
+  @keyframes zr-spin { to { transform: rotate(360deg); } }
+  #zr-loading p { color: #aab0c0; font-size: 0.9rem; }
+
+  /* ── Error ── */
+  #zr-error { display: none; text-align: center; padding: 48px 0; }
+  #zr-error p { color: #666; font-size: 0.95rem; margin-bottom: 20px; line-height: 1.6; }
+  #zr-retry-btn {
+    background: linear-gradient(135deg, #4361ee, #6366f1);
+    color: #ffffff;
+    border: none;
+    border-radius: 999px;
+    padding: 12px 36px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: inherit;
+    box-shadow: 0 2px 12px rgba(67,97,238,0.35);
+    transition: opacity 0.15s, transform 0.15s;
+  }
+  #zr-retry-btn:hover { opacity: 0.88; transform: translateY(-1px); }
+
+  /* ────────────────────────────────────────────
+     RESPONSIVE — tablet (≤ 720px)
+  ──────────────────────────────────────────── */
+  @media (max-width: 720px) {
+    #zr-toggle-wrap { margin-bottom: 22px; }
+    .zr-toggle-btn  { padding: 10px 30px; }
+    #zr-tabs-wrap   { margin-bottom: 24px; }
+    .zr-tab         { padding: 9px 18px; }
+    #zr-cards       { gap: 10px; }
+    .zr-rate-card   { padding: 20px 28px; }
+    .zr-col         { padding: 0 16px; }
+  }
+
+  /* ────────────────────────────────────────────
+     RESPONSIVE — mobile (≤ 520px)
+     Card breaks into two rows:
+       Row 1: loan type (full width)
+       Row 2: Interest | APR | Points
+  ──────────────────────────────────────────── */
+  @media (max-width: 520px) {
+    #zr-toggle-wrap { margin-bottom: 28px; }
+    #zr-toggle      { padding: 4px; }
+    .zr-toggle-btn  { padding: 11px 28px; font-size: 0.95rem; }
+
+    #zr-tabs-wrap   { margin-bottom: 28px; }
+    .zr-tab         { padding: 10px 18px; font-size: 0.88rem; }
+
+    #zr-cards       { gap: 12px; }
+
+    .zr-rate-card {
+      flex-wrap: wrap;
+      border-radius: 18px;
+      padding: 18px 20px;
+      gap: 0;
+    }
+
+    /* Loan type: full-width row */
+    .zr-col-loan {
+      flex: 0 0 100%;
+      padding: 0 0 14px 0;
+      border-bottom: 1px solid #eef0f6;
+      margin-bottom: 14px;
+    }
+    /* Hide the divider immediately after the loan col */
+    .zr-divider-loan { display: none; }
+
+    /* Stat columns share the second row equally */
+    .zr-col-stat {
+      flex: 1;
+      min-width: 0;
+      padding: 0 10px;
+    }
+    .zr-col-stat:first-of-type { padding-left: 0; }
+    .zr-col-stat:last-of-type  { padding-right: 0; }
+
+    .zr-divider-stat { height: 28px; }
+
+    .zr-col-label   { font-size: 0.62rem; margin-bottom: 5px; }
+    .zr-col-program { font-size: 0.97rem; }
+    .zr-col-value   { font-size: 0.95rem; }
+    .zr-col-interest .zr-col-value { font-size: 1.1rem; }
+    .zr-points-badge { font-size: 0.78rem; padding: 3px 9px; }
+
+    #zr-footer { flex-direction: column; align-items: flex-end; gap: 4px; margin-top: 12px; }
+  }
+</style>
+
+<div id="zr-root">
+
+  <div id="zr-toggle-wrap">
+    <div id="zr-toggle">
+      <button class="zr-toggle-btn zr-active" data-mode="purchase">Purchase</button>
+      <button class="zr-toggle-btn"            data-mode="refinance">Refinance</button>
+    </div>
+  </div>
+
+  <div id="zr-tabs-wrap">
+    <div id="zr-tabs">
+      <button class="zr-tab zr-active" data-tab="30yr">30 Yr Fixed</button>
+      <button class="zr-tab"           data-tab="15yr">15 Yr Fixed</button>
+      <button class="zr-tab"           data-tab="va">VA</button>
+    </div>
+  </div>
+
+  <div id="zr-loading">
+    <div class="zr-spinner"></div>
+    <p>Loading current rates…</p>
+  </div>
+
+  <div id="zr-error">
+    <p>⚠️ Unable to load mortgage rates right now.<br>Please try again in a moment.</p>
+    <button id="zr-retry-btn">Try Again</button>
+  </div>
+
+  <div id="zr-cards" style="display:none;"></div>
+
+  <div id="zr-footer">
+    <span id="zr-footer-left">
+      Rates sourced from <a href="https://www.zillow.com/mortgage-rates/" target="_blank" rel="noopener">Zillow</a>
+    </span>
+    <span id="zr-timestamp"></span>
+  </div>
+
+</div>
+
+<script>
+(function () {
+  var WORKER = "https://zillow-rates-proxy.testmesreeni.workers.dev/";
+
+  var TABS = {
+    "30yr": { label: "30 Yr Fixed", program: "Fixed30Year", loanType: "Conventional" },
+    "15yr": { label: "15 Yr Fixed", program: "Fixed15Year", loanType: "Conventional" },
+    "va":   { label: "VA",          program: "Fixed30Year", loanType: "VA"           }
+  };
+
+  var state = { tab: "30yr", refinance: false };
+
+  function fmt(v) {
+    return (typeof v === "number" && v > 0) ? v.toFixed(3) + "%" : "N/A";
+  }
+
+  function calcPoints(rate, parRate) {
+    return Math.max(0.001, (parRate - rate) * 4.5).toFixed(3);
+  }
+
+  function timestamp() {
+    var now = new Date();
+    return "Rates as of " + now.toLocaleDateString("en-US", {
+      month: "long", day: "numeric", year: "numeric"
+    }) + " \u00b7 " + now.toLocaleTimeString("en-US", {
+      hour: "numeric", minute: "2-digit", hour12: true
+    });
+  }
+
+  function setLoading() {
+    document.getElementById("zr-loading").style.display = "flex";
+    document.getElementById("zr-error").style.display   = "none";
+    document.getElementById("zr-cards").style.display   = "none";
+    document.getElementById("zr-footer").style.display  = "none";
+  }
+  function setError() {
+    document.getElementById("zr-loading").style.display = "none";
+    document.getElementById("zr-error").style.display   = "block";
+    document.getElementById("zr-cards").style.display   = "none";
+    document.getElementById("zr-footer").style.display  = "none";
+  }
+  function setContent() {
+    document.getElementById("zr-loading").style.display = "none";
+    document.getElementById("zr-error").style.display   = "none";
+    document.getElementById("zr-cards").style.display   = "flex";
+    document.getElementById("zr-footer").style.display  = "flex";
+  }
+
+  function render(data) {
+    var rates   = (data && data.rates) || {};
+    var entries = Object.values(rates).filter(function (e) { return e.rate > 0; });
+    if (!entries.length) { setError(); return; }
+
+    entries.sort(function (a, b) { return a.rate - b.rate; });
+
+    var parRate   = entries[entries.length - 1].rate;
+    var tabCfg    = TABS[state.tab];
+    var modeLabel = state.refinance ? "REFINANCE" : "PURCHASE";
+    var cards     = document.getElementById("zr-cards");
+    cards.innerHTML = "";
+
+    entries.forEach(function (entry) {
+      var pts  = calcPoints(entry.rate, parRate);
+      var card = document.createElement("div");
+      card.className = "zr-rate-card";
+
+      card.innerHTML =
+        /* Col 1 — Loan type */
+        '<div class="zr-col zr-col-loan">' +
+          '<span class="zr-col-label">' + modeLabel    + '</span>' +
+          '<span class="zr-col-program">' + tabCfg.label + '</span>' +
+        '</div>' +
+        '<div class="zr-divider zr-divider-loan"></div>' +
+
+        /* Col 2 — Interest */
+        '<div class="zr-col zr-col-stat zr-col-interest">' +
+          '<span class="zr-col-label">Interest</span>' +
+          '<span class="zr-col-value">' + fmt(entry.rate) + '</span>' +
+        '</div>' +
+        '<div class="zr-divider zr-divider-stat"></div>' +
+
+        /* Col 3 — APR */
+        '<div class="zr-col zr-col-stat">' +
+          '<span class="zr-col-label">APR</span>' +
+          '<span class="zr-col-value">' + fmt(entry.apr) + '</span>' +
+        '</div>' +
+        '<div class="zr-divider zr-divider-stat"></div>' +
+
+        /* Col 4 — Points */
+        '<div class="zr-col zr-col-stat">' +
+          '<span class="zr-col-label">Points</span>' +
+          '<span class="zr-points-badge">+' + pts + '</span>' +
+        '</div>';
+
+      cards.appendChild(card);
+    });
+
+    document.getElementById("zr-timestamp").textContent = timestamp();
+    setContent();
+  }
+
+  function fetchRates() {
+    setLoading();
+    var cfg = TABS[state.tab];
+    var url = WORKER +
+      "?program="   + encodeURIComponent(cfg.program)  +
+      "&loanType="  + encodeURIComponent(cfg.loanType) +
+      "&refinance=" + state.refinance;
+
+    fetch(url)
+      .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
+      .then(render)
+      .catch(setError);
+  }
+
+  document.querySelectorAll(".zr-toggle-btn").forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      document.querySelectorAll(".zr-toggle-btn").forEach(function (b) { b.classList.remove("zr-active"); });
+      btn.classList.add("zr-active");
+      state.refinance = (btn.dataset.mode === "refinance");
+      fetchRates();
+    });
+  });
+
+  document.querySelectorAll(".zr-tab").forEach(function (tab) {
+    tab.addEventListener("click", function () {
+      document.querySelectorAll(".zr-tab").forEach(function (t) { t.classList.remove("zr-active"); });
+      tab.classList.add("zr-active");
+      state.tab = tab.dataset.tab;
+      fetchRates();
+    });
+  });
+
+  document.getElementById("zr-retry-btn").addEventListener("click", fetchRates);
+  fetchRates();
+})();
+</script>
