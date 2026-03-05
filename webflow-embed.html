@@ -2,12 +2,14 @@
   /* ── Base ── */
   #zr-root {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-    max-width: 900px;
+    max-width: 1100px;
     width: 100%;
     margin: 0 auto;
-    color: #1a1a2e;
+    color: #1a0e00;
     box-sizing: border-box;
-    padding: 8px;
+    background: #f4f0eb;
+    padding: 32px 24px;
+    border-radius: 20px;
   }
   #zr-root * { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -15,135 +17,132 @@
   #zr-toggle-wrap {
     display: flex;
     justify-content: center;
-    margin-bottom: 28px;
+    margin-bottom: 24px;
   }
   #zr-toggle {
     display: inline-flex;
     gap: 4px;
-    background: #ffffff;
+    background: #e8e2da;
     border-radius: 999px;
     padding: 4px;
-    box-shadow: 0 0 0 2px #4361ee, 0 4px 16px rgba(67,97,238,0.15);
   }
   .zr-toggle-btn {
     border: none;
     background: transparent;
     border-radius: 999px;
-    padding: 10px 44px;
-    font-size: 1rem;
+    padding: 9px 36px;
+    font-size: 0.95rem;
     font-weight: 600;
     cursor: pointer;
     font-family: inherit;
-    color: #4361ee;
-    transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+    color: #7a6e65;
+    transition: background 0.2s, color 0.2s;
     white-space: nowrap;
   }
   .zr-toggle-btn.zr-active {
-    background: linear-gradient(135deg, #4361ee, #6366f1);
+    background: #1a0e00;
     color: #ffffff;
-    box-shadow: 0 2px 12px rgba(67,97,238,0.35);
   }
 
   /* ── Tabs ── */
   #zr-tabs-wrap {
     display: flex;
     justify-content: center;
-    margin-bottom: 32px;
+    margin-bottom: 28px;
   }
-  #zr-tabs { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; }
+  #zr-tabs { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; }
   .zr-tab {
-    border: 1.5px solid #d0d5e8;
+    border: 1.5px solid #d4cdc5;
     border-radius: 999px;
-    padding: 9px 24px;
-    font-size: 0.9rem;
+    padding: 8px 22px;
+    font-size: 0.87rem;
     font-weight: 500;
     cursor: pointer;
     font-family: inherit;
-    background: #ffffff;
-    color: #5a6080;
-    transition: background 0.15s, color 0.15s, border-color 0.15s, box-shadow 0.15s;
+    background: transparent;
+    color: #7a6e65;
+    transition: background 0.15s, color 0.15s, border-color 0.15s;
     white-space: nowrap;
   }
   .zr-tab.zr-active {
-    background: #4361ee;
+    background: #1a0e00;
     color: #ffffff;
-    border-color: #4361ee;
-    box-shadow: 0 2px 10px rgba(67,97,238,0.3);
+    border-color: #1a0e00;
   }
   .zr-tab:not(.zr-active):hover {
-    border-color: #4361ee;
-    color: #4361ee;
+    border-color: #1a0e00;
+    color: #1a0e00;
   }
 
-  /* ── Cards list ── */
-  #zr-cards { display: flex; flex-direction: column; gap: 12px; }
+  /* ── Cards grid ── */
+  #zr-cards {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+  }
 
   /* ── Card ── */
   .zr-rate-card {
-    display: flex;
-    align-items: center;
-    border-radius: 20px;
-    padding: 24px 40px;
     background: #ffffff;
-    box-shadow: 0 4px 20px rgba(26,26,46,0.10), 0 0 0 1px rgba(26,26,46,0.06);
-    transition: transform 0.18s ease, box-shadow 0.18s ease;
-  }
-  .zr-rate-card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 32px rgba(67,97,238,0.18), 0 0 0 1px rgba(67,97,238,0.10);
-  }
-
-  /* Column shared styles */
-  .zr-col {
-    flex: 1;
+    border-radius: 16px;
+    padding: 28px 24px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.07);
     display: flex;
     flex-direction: column;
-    padding: 0 24px;
-  }
-  .zr-col:first-child { padding-left: 0; }
-  .zr-col:last-child  { padding-right: 0; }
-
-  .zr-col-label {
-    font-size: 0.65rem;
-    font-weight: 600;
-    color: #a0a8c0;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    margin-bottom: 6px;
-  }
-  .zr-col-loan .zr-col-label { font-weight: 700; letter-spacing: 0.1em; }
-  .zr-col-program { font-size: 1.05rem; font-weight: 700; color: #1a1a2e; }
-  .zr-col-value   { font-size: 1rem;    font-weight: 700; color: #1a1a2e; }
-
-  /* Hero interest rate */
-  .zr-col-interest .zr-col-value {
-    font-size: 1.35rem;
-    font-weight: 800;
-    color: #4361ee;
-    letter-spacing: -0.02em;
   }
 
-  /* Vertical divider between columns */
-  .zr-divider {
-    width: 1px;
-    height: 36px;
-    background: linear-gradient(to bottom, transparent, #dde2f0, transparent);
-    flex-shrink: 0;
-    align-self: center;
-  }
-
-  /* Points badge */
-  .zr-points-badge {
-    display: inline-block;
-    background: #fff8e6;
-    border: 1.5px solid #f0c850;
-    color: #b87a00;
-    border-radius: 999px;
-    padding: 4px 12px;
-    font-size: 0.82rem;
+  .zr-card-title {
+    font-size: 0.72rem;
     font-weight: 700;
-    white-space: nowrap;
-    width: fit-content;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: #1a0e00;
+    margin-bottom: 18px;
+    line-height: 1.4;
+  }
+
+  .zr-rate-num {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #1a0e00;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    margin-bottom: 7px;
+  }
+
+  .zr-rate-label {
+    font-size: 0.82rem;
+    color: #9a9087;
+    font-weight: 400;
+  }
+
+  .zr-card-divider {
+    height: 1px;
+    background: #ede9e4;
+    margin: 20px 0;
+  }
+
+  /* Points row — orange style like the reference comparison text */
+  .zr-points-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 7px;
+    margin-top: 18px;
+  }
+  .zr-points-arrow {
+    color: #d94f00;
+    font-size: 1.05rem;
+    flex-shrink: 0;
+    line-height: 1.3;
+  }
+  .zr-points-text {
+    font-size: 0.82rem;
+    color: #4a4540;
+    line-height: 1.4;
+  }
+  .zr-points-value {
+    color: #d94f00;
+    font-weight: 600;
   }
 
   /* ── Footer ── */
@@ -154,10 +153,10 @@
     margin-top: 20px;
     padding: 0 4px;
   }
-  #zr-footer-left { font-size: 0.72rem; color: #c0c8d8; }
-  #zr-footer-left a { color: #4361ee; text-decoration: none; }
+  #zr-footer-left { font-size: 0.72rem; color: #b0a89e; }
+  #zr-footer-left a { color: #d94f00; text-decoration: none; }
   #zr-footer-left a:hover { text-decoration: underline; }
-  #zr-timestamp { font-size: 0.72rem; color: #c0c8d8; text-align: right; }
+  #zr-timestamp { font-size: 0.72rem; color: #b0a89e; text-align: right; }
 
   /* ── Loading ── */
   #zr-loading {
@@ -170,19 +169,19 @@
   }
   .zr-spinner {
     width: 36px; height: 36px;
-    border: 3px solid #e9ecef;
-    border-top-color: #4361ee;
+    border: 3px solid #e8e2da;
+    border-top-color: #1a0e00;
     border-radius: 50%;
     animation: zr-spin 0.75s linear infinite;
   }
   @keyframes zr-spin { to { transform: rotate(360deg); } }
-  #zr-loading p { color: #aab0c0; font-size: 0.9rem; }
+  #zr-loading p { color: #9a9087; font-size: 0.9rem; }
 
   /* ── Error ── */
   #zr-error { display: none; text-align: center; padding: 48px 0; }
   #zr-error p { color: #666; font-size: 0.95rem; margin-bottom: 20px; line-height: 1.6; }
   #zr-retry-btn {
-    background: linear-gradient(135deg, #4361ee, #6366f1);
+    background: #1a0e00;
     color: #ffffff;
     border: none;
     border-radius: 999px;
@@ -191,75 +190,23 @@
     font-weight: 600;
     cursor: pointer;
     font-family: inherit;
-    box-shadow: 0 2px 12px rgba(67,97,238,0.35);
-    transition: opacity 0.15s, transform 0.15s;
+    transition: opacity 0.15s;
   }
-  #zr-retry-btn:hover { opacity: 0.88; transform: translateY(-1px); }
+  #zr-retry-btn:hover { opacity: 0.75; }
 
-  /* ────────────────────────────────────────────
-     RESPONSIVE — tablet (≤ 720px)
-  ──────────────────────────────────────────── */
-  @media (max-width: 720px) {
-    #zr-toggle-wrap { margin-bottom: 22px; }
-    .zr-toggle-btn  { padding: 10px 30px; }
-    #zr-tabs-wrap   { margin-bottom: 24px; }
-    .zr-tab         { padding: 9px 18px; }
-    #zr-cards       { gap: 10px; }
-    .zr-rate-card   { padding: 20px 28px; }
-    .zr-col         { padding: 0 16px; }
+  /* ── Responsive ── */
+  @media (max-width: 900px) {
+    #zr-cards { grid-template-columns: repeat(3, 1fr); }
   }
-
-  /* ────────────────────────────────────────────
-     RESPONSIVE — mobile (≤ 520px)
-     Card breaks into two rows:
-       Row 1: loan type (full width)
-       Row 2: Interest | APR | Points
-  ──────────────────────────────────────────── */
-  @media (max-width: 520px) {
-    #zr-toggle-wrap { margin-bottom: 28px; }
-    #zr-toggle      { padding: 4px; }
-    .zr-toggle-btn  { padding: 11px 28px; font-size: 0.95rem; }
-
-    #zr-tabs-wrap   { margin-bottom: 28px; }
-    .zr-tab         { padding: 10px 18px; font-size: 0.88rem; }
-
-    #zr-cards       { gap: 12px; }
-
-    .zr-rate-card {
-      flex-wrap: wrap;
-      border-radius: 18px;
-      padding: 18px 20px;
-      gap: 0;
-    }
-
-    /* Loan type: full-width row */
-    .zr-col-loan {
-      flex: 0 0 100%;
-      padding: 0 0 14px 0;
-      border-bottom: 1px solid #eef0f6;
-      margin-bottom: 14px;
-    }
-    /* Hide the divider immediately after the loan col */
-    .zr-divider-loan { display: none; }
-
-    /* Stat columns share the second row equally */
-    .zr-col-stat {
-      flex: 1;
-      min-width: 0;
-      padding: 0 10px;
-    }
-    .zr-col-stat:first-of-type { padding-left: 0; }
-    .zr-col-stat:last-of-type  { padding-right: 0; }
-
-    .zr-divider-stat { height: 28px; }
-
-    .zr-col-label   { font-size: 0.62rem; margin-bottom: 5px; }
-    .zr-col-program { font-size: 0.97rem; }
-    .zr-col-value   { font-size: 0.95rem; }
-    .zr-col-interest .zr-col-value { font-size: 1.1rem; }
-    .zr-points-badge { font-size: 0.78rem; padding: 3px 9px; }
-
-    #zr-footer { flex-direction: column; align-items: flex-end; gap: 4px; margin-top: 12px; }
+  @media (max-width: 680px) {
+    .zr-toggle-btn { padding: 9px 24px; }
+    #zr-cards { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+    .zr-rate-card { padding: 22px 18px; }
+    .zr-rate-num  { font-size: 2.1rem; }
+  }
+  @media (max-width: 400px) {
+    #zr-cards { grid-template-columns: 1fr; }
+    #zr-root  { padding: 20px 16px; }
   }
 </style>
 
@@ -311,6 +258,15 @@
     "va":   { label: "VA",          program: "Fixed30Year", loanType: "VA"           }
   };
 
+  // Human-readable labels for each credit/LTV tier
+  var TIER_NAMES = {
+    "p1": "EXCELLENT CREDIT",
+    "p2": "EXCELLENT CREDIT | HIGH LTV",
+    "p3": "GOOD CREDIT",
+    "p4": "GOOD CREDIT | HIGH LTV",
+    "p5": "STANDARD"
+  };
+
   var state = { tab: "30yr", refinance: false };
 
   function fmt(v) {
@@ -345,75 +301,53 @@
   function setContent() {
     document.getElementById("zr-loading").style.display = "none";
     document.getElementById("zr-error").style.display   = "none";
-    document.getElementById("zr-cards").style.display   = "flex";
+    document.getElementById("zr-cards").style.display   = "grid";
     document.getElementById("zr-footer").style.display  = "flex";
   }
 
   function render(data) {
     var rates   = (data && data.rates) || {};
-    var entries = Object.values(rates).filter(function (e) { return e.rate > 0; });
+    // Use entries so we keep the key (p1–p5) for tier labels
+    var entries = Object.entries(rates).filter(function (e) { return e[1].rate > 0; });
     if (!entries.length) { setError(); return; }
 
-    entries.sort(function (a, b) { return a.rate - b.rate; });
+    entries.sort(function (a, b) { return a[1].rate - b[1].rate; });
 
-    var parRate   = entries[entries.length - 1].rate;
-    var tabCfg    = TABS[state.tab];
-    var modeLabel = state.refinance ? "REFINANCE" : "PURCHASE";
-    var cards     = document.getElementById("zr-cards");
+    var parRate = entries[entries.length - 1][1].rate;
+    var cards   = document.getElementById("zr-cards");
     cards.innerHTML = "";
 
     entries.forEach(function (entry) {
-      var pts  = calcPoints(entry.rate, parRate);
+      var key  = entry[0];
+      var item = entry[1];
+      var pts  = calcPoints(item.rate, parRate);
+      var tier = TIER_NAMES[key] || key.toUpperCase();
       var card = document.createElement("div");
       card.className = "zr-rate-card";
 
+      var pointsHtml = "";
+      if (parseFloat(pts) > 0.001) {
+        pointsHtml =
+          '<div class="zr-points-row">' +
+            '<span class="zr-points-arrow">&#x2198;</span>' +
+            '<span class="zr-points-text">Points: <span class="zr-points-value">+' + pts + '</span></span>' +
+          '</div>';
+      }
+
       card.innerHTML =
-        /* Col 1 — Loan type */
-        '<div class="zr-col zr-col-loan">' +
-          '<span class="zr-col-label">' + modeLabel    + '</span>' +
-          '<span class="zr-col-program">' + tabCfg.label + '</span>' +
-        '</div>' +
-        '<div class="zr-divider zr-divider-loan"></div>' +
-
-        /* Col 2 — Interest */
-        '<div class="zr-col zr-col-stat zr-col-interest">' +
-          '<span class="zr-col-label">Interest</span>' +
-          '<span class="zr-col-value">' + fmt(entry.rate) + '</span>' +
-        '</div>' +
-        '<div class="zr-divider zr-divider-stat"></div>' +
-
-        /* Col 3 — APR */
-        '<div class="zr-col zr-col-stat">' +
-          '<span class="zr-col-label">APR</span>' +
-          '<span class="zr-col-value">' + fmt(entry.apr) + '</span>' +
-        '</div>' +
-        '<div class="zr-divider zr-divider-stat"></div>' +
-
-        /* Col 4 — Points */
-        '<div class="zr-col zr-col-stat">' +
-          '<span class="zr-col-label">Points</span>' +
-          '<span class="zr-points-badge">+' + pts + '</span>' +
-        '</div>';
+        '<div class="zr-card-title">' + tier + '</div>' +
+        '<div class="zr-rate-num">'   + fmt(item.rate) + '</div>' +
+        '<div class="zr-rate-label">Interest rate</div>' +
+        '<div class="zr-card-divider"></div>' +
+        '<div class="zr-rate-num">'   + fmt(item.apr) + '</div>' +
+        '<div class="zr-rate-label">APR</div>' +
+        pointsHtml;
 
       cards.appendChild(card);
     });
 
     document.getElementById("zr-timestamp").textContent = timestamp();
     setContent();
-  }
-
-  function fetchRates() {
-    setLoading();
-    var cfg = TABS[state.tab];
-    var url = WORKER +
-      "?program="   + encodeURIComponent(cfg.program)  +
-      "&loanType="  + encodeURIComponent(cfg.loanType) +
-      "&refinance=" + state.refinance;
-
-    fetch(url)
-      .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
-      .then(render)
-      .catch(setError);
   }
 
   document.querySelectorAll(".zr-toggle-btn").forEach(function (btn) {
@@ -433,6 +367,20 @@
       fetchRates();
     });
   });
+
+  function fetchRates() {
+    setLoading();
+    var cfg = TABS[state.tab];
+    var url = WORKER +
+      "?program="   + encodeURIComponent(cfg.program)  +
+      "&loanType="  + encodeURIComponent(cfg.loanType) +
+      "&refinance=" + state.refinance;
+
+    fetch(url)
+      .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
+      .then(render)
+      .catch(setError);
+  }
 
   document.getElementById("zr-retry-btn").addEventListener("click", fetchRates);
   fetchRates();
