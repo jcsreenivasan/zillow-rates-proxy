@@ -321,6 +321,7 @@
       var tier = TIER_NAMES[key] || key.toUpperCase();
       var card = document.createElement("div");
       card.className = "zr-rate-card";
+      card.setAttribute("style", "padding-top:16px; padding-left:16px; padding-bottom:16px;");
 
       var pointsHtml = "";
       if (parseFloat(pts) > 0.001) {
