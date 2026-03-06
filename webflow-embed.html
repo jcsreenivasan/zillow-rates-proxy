@@ -30,7 +30,6 @@
     border: none;
     background: transparent;
     border-radius: 999px;
-    padding: 8px;
     font-size: 0.95rem;
     font-weight: 600;
     cursor: pointer;
@@ -54,7 +53,6 @@
   .zr-tab {
     border: 1.5px solid #d4cdc5;
     border-radius: 999px;
-    padding: 8px;
     font-size: 0.87rem;
     font-weight: 500;
     cursor: pointer;
@@ -118,7 +116,6 @@
   .zr-card-divider {
     height: 1px;
     background: #ede9e4;
-    margin: 16px 0;
   }
 
   /* Points row — orange style like the reference comparison text */
@@ -126,7 +123,6 @@
     display: flex;
     align-items: flex-start;
     gap: 7px;
-    margin-top: 16px;
   }
   .zr-points-arrow {
     color: #d94f00;
@@ -213,16 +209,16 @@
 
   <div id="zr-toggle-wrap">
     <div id="zr-toggle">
-      <button class="zr-toggle-btn zr-active" data-mode="purchase">Purchase</button>
-      <button class="zr-toggle-btn"            data-mode="refinance">Refinance</button>
+      <button class="zr-toggle-btn zr-active" data-mode="purchase"  style="padding:8px;">Purchase</button>
+      <button class="zr-toggle-btn"            data-mode="refinance" style="padding:8px;">Refinance</button>
     </div>
   </div>
 
   <div id="zr-tabs-wrap">
     <div id="zr-tabs">
-      <button class="zr-tab zr-active" data-tab="30yr">30 Yr Fixed</button>
-      <button class="zr-tab"           data-tab="15yr">15 Yr Fixed</button>
-      <button class="zr-tab"           data-tab="va">VA</button>
+      <button class="zr-tab zr-active" data-tab="30yr" style="padding:8px;">30 Yr Fixed</button>
+      <button class="zr-tab"           data-tab="15yr" style="padding:8px;">15 Yr Fixed</button>
+      <button class="zr-tab"           data-tab="va"   style="padding:8px;">VA</button>
     </div>
   </div>
 
@@ -326,7 +322,7 @@
       var pointsHtml = "";
       if (parseFloat(pts) > 0.001) {
         pointsHtml =
-          '<div class="zr-points-row">' +
+          '<div class="zr-points-row" style="margin-top:16px;">' +
             '<span class="zr-points-arrow">&#x2198;</span>' +
             '<span class="zr-points-text">Points: <span class="zr-points-value">+' + pts + '</span></span>' +
           '</div>';
@@ -335,8 +331,8 @@
       card.innerHTML =
         '<div class="zr-card-title">' + tier + '</div>' +
         '<div class="zr-rate-num">'   + fmt(item.rate) + '</div>' +
-        '<div class="zr-rate-label">Interest rate</div>' +
-        '<div class="zr-card-divider"></div>' +
+        '<div class="zr-rate-label" style="margin-bottom:16px;">Interest rate</div>' +
+        '<div class="zr-card-divider" style="margin-bottom:16px;"></div>' +
         '<div class="zr-rate-num">'   + fmt(item.apr) + '</div>' +
         '<div class="zr-rate-label">APR</div>' +
         pointsHtml;
