@@ -85,8 +85,7 @@
   .zr-rate-card {
     background: #f1f1f1;
     border-radius: 16px;
-    padding: 28px 24px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.07);
+    padding: 28px 28px 28px 28px;
     display: flex;
     flex-direction: column;
   }
@@ -107,19 +106,20 @@
     color: #1a0e00;
     line-height: 1;
     letter-spacing: -0.02em;
-    margin-bottom: 7px;
+    margin-bottom: 4px;
   }
 
   .zr-rate-label {
     font-size: 0.82rem;
     color: #9a9087;
     font-weight: 400;
+    margin-bottom: 16px;
   }
 
   .zr-card-divider {
     height: 1px;
     background: #ede9e4;
-    margin: 20px 0;
+    margin-bottom: 16px;
   }
 
   /* Points row — orange style like the reference comparison text */
@@ -127,7 +127,6 @@
     display: flex;
     align-items: flex-start;
     gap: 7px;
-    margin-top: 18px;
   }
   .zr-points-arrow {
     color: #d94f00;
@@ -240,9 +239,7 @@
   <div id="zr-cards" style="display:none;"></div>
 
   <div id="zr-footer">
-    <span id="zr-footer-left">
-      Rates sourced from <a href="https://www.zillow.com/mortgage-rates/" target="_blank" rel="noopener">Zillow</a>
-    </span>
+    <span></span>
     <span id="zr-timestamp"></span>
   </div>
 
