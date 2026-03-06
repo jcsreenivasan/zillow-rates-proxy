@@ -189,6 +189,60 @@
   }
   #zr-retry-btn:hover { opacity: 0.75; }
 
+  /* ── Magic AI button & popup ── */
+  .zr-magic-wrap {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    z-index: 10;
+  }
+  .zr-magic-btn {
+    width: 28px;
+    height: 28px;
+    border: none;
+    border-radius: 50%;
+    background: #ede9ff;
+    color: #6b48ff;
+    cursor: pointer;
+    font-size: 0.88rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    transition: background 0.15s, transform 0.15s;
+  }
+  .zr-magic-btn:hover { background: #d8d0ff; transform: scale(1.12); }
+  .zr-magic-popup {
+    position: absolute;
+    top: 36px;
+    right: 0;
+    width: 210px;
+    background: #1a0e00;
+    color: #f0ece6;
+    border-radius: 12px;
+    padding: 14px;
+    font-size: 0.78rem;
+    line-height: 1.55;
+    box-shadow: 0 6px 24px rgba(0,0,0,0.22);
+    z-index: 1000;
+  }
+  .zr-magic-popup-label {
+    font-size: 0.62rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #a89a8a;
+    margin-bottom: 8px;
+  }
+  .zr-magic-spin {
+    width: 16px; height: 16px;
+    border: 2px solid rgba(255,255,255,0.15);
+    border-top-color: #fff;
+    border-radius: 50%;
+    animation: zr-spin 0.75s linear infinite;
+    margin: 4px auto 0;
+  }
+
   /* ── Responsive ── */
   @media (max-width: 900px) {
     #zr-cards { grid-template-columns: repeat(3, 1fr); }
@@ -317,7 +371,7 @@
       var tier = TIER_NAMES[key] || key.toUpperCase();
       var card = document.createElement("div");
       card.className = "zr-rate-card";
-      card.setAttribute("style", "padding-top:16px; padding-left:16px; padding-bottom:16px;");
+      card.setAttribute("style", "padding-top:16px; padding-left:16px; padding-bottom:16px; position:relative;");
 
       var pointsHtml = "";
       if (parseFloat(pts) > 0.001) {
@@ -329,6 +383,14 @@
       }
 
       card.innerHTML =
+        '<div class="zr-magic-wrap">' +
+          '<button class="zr-magic-btn" title="AI Insight">&#10022;</button>' +
+          '<div class="zr-magic-popup" style="display:none;">' +
+            '<div class="zr-magic-popup-label">&#10022; AI Insight</div>' +
+            '<div class="zr-magic-spin"></div>' +
+            '<p class="zr-magic-text" style="display:none;margin:0;"></p>' +
+          '</div>' +
+        '</div>' +
         '<div class="zr-card-title">' + tier + '</div>' +
         '<div class="zr-rate-num">'   + fmt(item.rate) + '</div>' +
         '<div class="zr-rate-label" style="margin-bottom:16px;">Interest rate</div>' +
@@ -338,6 +400,52 @@
         pointsHtml;
 
       cards.appendChild(card);
+
+      // ── Magic icon hover: fetch AI explanation ──
+      (function (cardEl, tierName, rateVal, aprVal, ptsVal, programLabel, isRefinance) {
+        var btn      = cardEl.querySelector(".zr-magic-btn");
+        var popup    = cardEl.querySelector(".zr-magic-popup");
+        var spinner  = cardEl.querySelector(".zr-magic-spin");
+        var textEl   = cardEl.querySelector(".zr-magic-text");
+        var hideTimer = null;
+        var loaded   = false;
+
+        function showPopup() {
+          clearTimeout(hideTimer);
+          popup.style.display = "block";
+          if (!loaded) {
+            loaded = true;
+            fetch(WORKER + "explain", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                tier: tierName, rate: rateVal, apr: aprVal,
+                pts: ptsVal, program: programLabel, refinance: isRefinance
+              })
+            })
+            .then(function (r) { return r.json(); })
+            .then(function (d) {
+              spinner.style.display = "none";
+              textEl.textContent    = d.text || "No insight available.";
+              textEl.style.display  = "block";
+            })
+            .catch(function () {
+              spinner.style.display = "none";
+              textEl.textContent    = "Unable to load AI insight right now.";
+              textEl.style.display  = "block";
+            });
+          }
+        }
+
+        function startHide() {
+          hideTimer = setTimeout(function () { popup.style.display = "none"; }, 200);
+        }
+
+        btn.addEventListener("mouseenter", showPopup);
+        btn.addEventListener("mouseleave", startHide);
+        popup.addEventListener("mouseenter", function () { clearTimeout(hideTimer); });
+        popup.addEventListener("mouseleave", startHide);
+      })(card, tier, item.rate, item.apr, pts, TABS[state.tab].label, state.refinance);
     });
 
     document.getElementById("zr-timestamp").textContent = timestamp();
