@@ -86,6 +86,11 @@
     padding: 28px 28px 28px 28px;
     display: flex;
     flex-direction: column;
+    transition: transform 0.18s ease, box-shadow 0.18s ease;
+  }
+  .zr-rate-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.10);
   }
 
   .zr-card-title {
@@ -152,6 +157,26 @@
   #zr-footer-left a { color: #d94f00; text-decoration: none; }
   #zr-footer-left a:hover { text-decoration: underline; }
   #zr-timestamp { font-size: 0.72rem; color: #b0a89e; text-align: right; }
+  #zr-live-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: #16a34a;
+  }
+  .zr-live-dot {
+    width: 7px;
+    height: 7px;
+    background: #16a34a;
+    border-radius: 50%;
+    flex-shrink: 0;
+    animation: zr-pulse 1.6s ease-in-out infinite;
+  }
+  @keyframes zr-pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50%       { opacity: 0.4; transform: scale(0.75); }
+  }
 
   /* ── Loading ── */
   #zr-loading {
@@ -263,14 +288,14 @@
 
   <div id="zr-toggle-wrap">
     <div id="zr-toggle">
-      <button class="zr-toggle-btn zr-active" data-mode="purchase"  style="padding:8px;">Purchase</button>
+      <button class="zr-toggle-btn zr-active" data-mode="purchase"  style="padding:8px;background:#041f30;color:#ffffff;">Purchase</button>
       <button class="zr-toggle-btn"            data-mode="refinance" style="padding:8px;">Refinance</button>
     </div>
   </div>
 
   <div id="zr-tabs-wrap">
     <div id="zr-tabs">
-      <button class="zr-tab zr-active" data-tab="30yr" style="padding:8px;">30 Yr Fixed</button>
+      <button class="zr-tab zr-active" data-tab="30yr" style="padding:8px;background:#041f30;color:#ffffff;border-color:#041f30;">30 Yr Fixed</button>
       <button class="zr-tab"           data-tab="15yr" style="padding:8px;">15 Yr Fixed</button>
       <button class="zr-tab"           data-tab="va"   style="padding:8px;">VA</button>
     </div>
@@ -290,7 +315,10 @@
 
   <div id="zr-footer">
     <span></span>
-    <span id="zr-timestamp"></span>
+    <span style="display:inline-flex; align-items:center; gap:12px;">
+      <span id="zr-live-badge"><span class="zr-live-dot"></span>Live Rates</span>
+      <span id="zr-timestamp"></span>
+    </span>
   </div>
 
 </div>
@@ -385,7 +413,7 @@
       card.innerHTML =
         '<div class="zr-magic-wrap">' +
           '<button class="zr-magic-btn" title="AI Insight">&#10022;</button>' +
-          '<div class="zr-magic-popup" style="display:none;">' +
+          '<div class="zr-magic-popup" style="display:none;padding:20px;">' +
             '<div class="zr-magic-popup-label">&#10022; AI Insight</div>' +
             '<div class="zr-magic-spin"></div>' +
             '<p class="zr-magic-text" style="display:none;margin:0;"></p>' +
@@ -393,8 +421,8 @@
         '</div>' +
         '<div class="zr-card-title">' + tier + '</div>' +
         '<div class="zr-rate-num">'   + fmt(item.rate) + '</div>' +
-        '<div class="zr-rate-label" style="margin-bottom:16px;">Interest rate</div>' +
-        '<div class="zr-card-divider" style="margin-bottom:16px;"></div>' +
+        '<div class="zr-rate-label" style="margin-bottom:12px;">Interest rate</div>' +
+        '<div class="zr-card-divider" style="margin-bottom:12px;"></div>' +
         '<div class="zr-rate-num">'   + fmt(item.apr) + '</div>' +
         '<div class="zr-rate-label">APR</div>' +
         pointsHtml;
@@ -454,8 +482,14 @@
 
   document.querySelectorAll(".zr-toggle-btn").forEach(function (btn) {
     btn.addEventListener("click", function () {
-      document.querySelectorAll(".zr-toggle-btn").forEach(function (b) { b.classList.remove("zr-active"); });
+      document.querySelectorAll(".zr-toggle-btn").forEach(function (b) {
+        b.classList.remove("zr-active");
+        b.style.background = "";
+        b.style.color = "";
+      });
       btn.classList.add("zr-active");
+      btn.style.background = "#041f30";
+      btn.style.color = "#ffffff";
       state.refinance = (btn.dataset.mode === "refinance");
       fetchRates();
     });
@@ -463,8 +497,16 @@
 
   document.querySelectorAll(".zr-tab").forEach(function (tab) {
     tab.addEventListener("click", function () {
-      document.querySelectorAll(".zr-tab").forEach(function (t) { t.classList.remove("zr-active"); });
+      document.querySelectorAll(".zr-tab").forEach(function (t) {
+        t.classList.remove("zr-active");
+        t.style.background = "";
+        t.style.color = "";
+        t.style.borderColor = "";
+      });
       tab.classList.add("zr-active");
+      tab.style.background = "#041f30";
+      tab.style.color = "#ffffff";
+      tab.style.borderColor = "#041f30";
       state.tab = tab.dataset.tab;
       fetchRates();
     });
