@@ -287,7 +287,7 @@
 <div id="zr-root">
 
   <div id="zr-toggle-wrap">
-    <div id="zr-toggle">
+    <div id="zr-toggle" style="background:#f3f2f0;padding:6px;">
       <button class="zr-toggle-btn zr-active" data-mode="purchase"  style="padding:8px;background:#041f30;color:#ffffff;">Purchase</button>
       <button class="zr-toggle-btn"            data-mode="refinance" style="padding:8px;">Refinance</button>
     </div>
@@ -419,11 +419,11 @@
             '<p class="zr-magic-text" style="display:none;margin:0;"></p>' +
           '</div>' +
         '</div>' +
-        '<div class="zr-card-title">' + tier + '</div>' +
-        '<div class="zr-rate-num">'   + fmt(item.rate) + '</div>' +
+        '<div class="zr-card-title" style="margin-bottom:24px;">' + tier + '</div>' +
+        '<div class="zr-rate-num" style="font-size:1.875rem;">'   + fmt(item.rate) + '</div>' +
         '<div class="zr-rate-label" style="margin-bottom:12px;">Interest rate</div>' +
         '<div class="zr-card-divider" style="margin-bottom:12px;"></div>' +
-        '<div class="zr-rate-num">'   + fmt(item.apr) + '</div>' +
+        '<div class="zr-rate-num" style="font-size:1.875rem;">'   + fmt(item.apr) + '</div>' +
         '<div class="zr-rate-label">APR</div>' +
         pointsHtml;
 
